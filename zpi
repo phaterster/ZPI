@@ -1,0 +1,34 @@
+#define awersSilnika 8
+#define rewersSilnika 9
+ 
+long odebraneDane = 0;
+long czasPracySilnika = 100000; // 100 sekund
+ 
+void setup() {
+  Serial.setTimeout(czasPracySilnika); //po tym czasie SerialparseInt zwraca zero, bez ustawienia tego parametru zwraca zero po sekundzie.
+  Serial.begin(9600); //Uruchomienie komunikacji portu szeregowego
+  pinMode(awersSilnika, OUTPUT); //Konfiguracja wyjść
+  pinMode(rewersSilnika, OUTPUT);
+  
+  digitalWrite(awersSilnika, LOW); //stan poczatkowy LOW
+  digitalWrite(rewersSilnika, LOW); 
+  
+
+}
+
+void loop() {
+  
+  if(Serial.available() > 0) {
+    odebraneDane = Serial.parseInt(); 
+    Serial.println(odebraneDane);
+  }
+  
+    digitalWrite(awersSilnika, HIGH);
+    delay(odebraneDane);
+    digitalWrite(awersSilnika, LOW);
+    delay(odebraneDane);
+    digitalWrite(rewersSilnika, HIGH);
+    delay(odebraneDane);
+    digitalWrite(rewersSilnika, LOW);
+    delay(odebraneDane);
+}

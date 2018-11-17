@@ -1,0 +1,43 @@
+#define LED1 3
+#define LED2 4
+ 
+int stanLED1 = LOW;
+int stanLED2 = HIGH;
+ 
+unsigned long miganieLED1 = 1000;
+unsigned long miganieLED2 = 1000;
+ 
+unsigned long aktualnyCzas = 0;
+unsigned long zapamietanyCzasLED1 = 0;
+unsigned long zapamietanyCzasLED2 = 0;
+ 
+void setup(){
+  Serial.begin(9600);
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+}
+ 
+void loop(){
+  //Pobierz liczbe milisekund od startu
+  aktualnyCzas = millis();
+ 
+  //Jeśli różnica wynosi ponad miganieLED1
+  if (aktualnyCzas - zapamietanyCzasLED1 >= miganieLED1) {
+    //Zapamietaj aktualny czas
+    zapamietanyCzasLED1 = aktualnyCzas;
+    //Zmieniamy stan diody na przeciwny
+    stanLED1 = !stanLED1;
+    //ustawiamy nowy stan na diodzie
+    digitalWrite(LED1, stanLED1);
+  }
+ 
+    //Jeśli różnica wynosi ponad miganieLED2
+  if (aktualnyCzas - zapamietanyCzasLED2 >= miganieLED2) {
+    //Zapamietaj aktualny czas
+    zapamietanyCzasLED2 = aktualnyCzas;
+    //Zmieniamy stan diody na przeciwny
+    stanLED2 = !stanLED2;
+    //ustawiamy nowy stan na diodzie
+    digitalWrite(LED2, stanLED2);
+  }
+}
